@@ -3,7 +3,8 @@ import React from 'react'
 const Home = () => {
     return (
         <div>
-            <h1>Home</h1>
+            <h2>Bienvenido al blog de Konecta para prueba técnica</h2>
+
         </div>
     )
 

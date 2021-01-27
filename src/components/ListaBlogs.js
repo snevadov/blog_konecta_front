@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import {Modal, ModalBody, ModalFooter, ModalHeader} from 'reactstrap';
 import axios from 'axios';
+import {Link} from 'react-router-dom';
 
 const ListaBlogs = () => {
 
@@ -164,7 +165,7 @@ const ListaBlogs = () => {
       }
 
     return (
-        <div>
+        <div className="Container">
             <h2>Listado de Blogs</h2>
             <table className="table">
                 <thead>
@@ -182,7 +183,11 @@ const ListaBlogs = () => {
                             <td>{blog.titulo}</td>
                             <td>{blog.textocorto}</td>
                             <td>{blog.categorias}</td>
-                            <td>{blog.slug}</td>
+                            <td>
+                                <Link to={`/blogs/${blog.id}/${blog.slug}`}>
+                                    {blog.slug}
+                                </Link>
+                            </td>
                             <td>
                                 <button className="btn btn-primary" onClick={()=>seleccionarBlog(blog, "Editar")}>Editar</button> {"  "}
                                 <button className="btn btn-danger" onClick={()=>seleccionarBlog(blog, "Eliminar")}>Eliminar</button>

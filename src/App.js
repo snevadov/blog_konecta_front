@@ -14,6 +14,7 @@ import ListaUsuarios from './components/ListaUsuarios';
 import ListaBlogs from './components/ListaBlogs';
 import Home from './components/Home';
 import ListaCategorias from './components/ListaCategorias';
+import Blog from './components/Blog';
 
 function App() {
   const baseUrl="http://localhost/blog_konecta/";
@@ -40,6 +41,9 @@ function App() {
         </div>
         <hr />
         <Switch>
+          <Route path="/blogs/:id/:slug">
+            <Blog />
+          </Route>
           <Route path="/usuarios">
             <ListaUsuarios />
           </Route>
@@ -50,7 +54,7 @@ function App() {
             <ListaCategorias />
           </Route>
           <Route path="/">
-            <Home />
+            <ListaBlogs />
           </Route>
         </Switch>
       </div>
