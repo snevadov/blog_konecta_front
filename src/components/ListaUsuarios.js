@@ -93,9 +93,13 @@ const ListaUsuarios = () => {
         f.append("action", "crearUsuario");
         await axios.post(baseUrl, f)
         .then(response=>{
-            console.log(response.data);
-            setData(response.data.usuarios);
-            abrirCerrarModalInsertar();
+            if(response.data.exito)
+            {
+                setData(response.data.usuarios);
+                abrirCerrarModalInsertar();
+            }
+            alert(response.data.mensaje);
+
         }).catch(error=>{
             console.log(error);
         })
@@ -108,26 +112,30 @@ const ListaUsuarios = () => {
         f.append("identificacion", usuarioSeleccionado.identificacion);
         f.append("nombre", usuarioSeleccionado.nombre);
         f.append("correo", usuarioSeleccionado.correo);
-        f.append("contrasena", usuarioSeleccionado.contrasena);
+        f.append("contrasena", (usuarioSeleccionado.contrasena != null) ? usuarioSeleccionado.contrasena : "");
         f.append("numeromovil", usuarioSeleccionado.numeromovil);
         f.append("idtipousuario", usuarioSeleccionado.idtipousuario);
         f.append("tipousuario", usuarioSeleccionado.tipousuario);
         f.append("action", "editarUsuario");
         await axios.post(baseUrl, f)
         .then(response=>{
-          var dataNueva= response.data.usuarios;
-          dataNueva.map(usuario=>{
-            if(usuario.id===usuarioSeleccionado.id){
-              usuario.nombre=usuarioSeleccionado.nombre;
-              usuario.identificacion=usuarioSeleccionado.identificacion;
-              usuario.correo=usuarioSeleccionado.correo;
-              usuario.numeromovil=usuarioSeleccionado.numeromovil;
-              usuario.idtipousuario=usuarioSeleccionado.idtipousuario;
-              usuario.tipousuario=usuarioSeleccionado.tipousuario;
+            if(response.data.exito)
+            {
+                var dataNueva= response.data.usuarios;
+                dataNueva.map(usuario=>{
+                    if(usuario.id===usuarioSeleccionado.id){
+                    usuario.nombre=usuarioSeleccionado.nombre;
+                    usuario.identificacion=usuarioSeleccionado.identificacion;
+                    usuario.correo=usuarioSeleccionado.correo;
+                    usuario.numeromovil=usuarioSeleccionado.numeromovil;
+                    usuario.idtipousuario=usuarioSeleccionado.idtipousuario;
+                    usuario.tipousuario=usuarioSeleccionado.tipousuario;
+                    }
+                });
+                setData(dataNueva);
+                abrirCerrarModalEditar();
             }
-          });
-          setData(dataNueva);
-          abrirCerrarModalEditar();
+            alert(response.data.mensaje);
         }).catch(error=>{
           console.log(error);
         })
@@ -140,8 +148,12 @@ const ListaUsuarios = () => {
         f.append("action", "eliminarUsuario");
         await axios.post(baseUrl, f, {params: {id: usuarioSeleccionado.id}})
         .then(response=>{
-          setData(response.data.usuarios.filter(usuario=>usuario.id!==usuarioSeleccionado.id));
-          abrirCerrarModalEliminar();
+            if(response.data.exito)
+            {
+                setData(response.data.usuarios.filter(usuario=>usuario.id!==usuarioSeleccionado.id));
+                abrirCerrarModalEliminar();
+            }
+            alert(response.data.mensaje);
         }).catch(error=>{
           console.log(error);
         })
@@ -182,27 +194,27 @@ const ListaUsuarios = () => {
             <ModalHeader>Insertar Usuario</ModalHeader>
             <ModalBody>
                 <div className="form-group">
-                <label>Identificación: </label>
+                <label>Identificación:* </label>
                 <br />
                 <input type="text" className="form-control" name="identificacion" onChange={handleChange}/>
                 <br />
-                <label>Nombre: </label>
+                <label>Nombre:* </label>
                 <br />
                 <input type="text" className="form-control" name="nombre" onChange={handleChange}/>
                 <br />
-                <label>Correo: </label>
+                <label>Correo:* </label>
                 <br />
                 <input type="text" className="form-control" name="correo" onChange={handleChange}/>
                 <br />
-                <label>Contraseña: </label>
+                <label>Contraseña:* </label>
                 <br />
                 <input type="password" className="form-control" name="contrasena" onChange={handleChange}/>
                 <br />
-                <label>Número Móvil: </label>
+                <label>Número Móvil:* </label>
                 <br />
                 <input type="text" className="form-control" name="numeromovil" onChange={handleChange}/>
                 <br />
-                <label>Tipo usuario: </label>
+                <label>Tipo usuario:* </label>
                 <br />
                 <select className="form-select" aria-label="Default select example" name="idtipousuario" onChange={handleChange}>
                     <option value="1">Administrador</option>
@@ -227,23 +239,23 @@ const ListaUsuarios = () => {
                 <br />
                 <input type="text" className="form-control" name="identificacion" onChange={handleChange} value={usuarioSeleccionado && usuarioSeleccionado.identificacion}/>
                 <br />
-                <label>Nombre: </label>
+                <label>Nombre:* </label>
                 <br />
                 <input type="text" className="form-control" name="nombre" onChange={handleChange} value={usuarioSeleccionado && usuarioSeleccionado.nombre}/>
                 <br />
-                <label>Correo: </label>
+                <label>Correo:* </label>
                 <br />
                 <input type="text" className="form-control" name="correo" onChange={handleChange} value={usuarioSeleccionado && usuarioSeleccionado.correo}/>
                 <br />
-                <label>Contraseña: </label>
+                <label>Contraseña:* </label>
                 <br />
-                <input type="password" className="form-control" name="contrasena" onChange={handleChange} value={usuarioSeleccionado && usuarioSeleccionado.contrasena}/>
+                <input type="password" className="form-control" name="contrasena" onChange={handleChange} />
                 <br />
-                <label>Número Móvil: </label>
+                <label>Número Móvil:* </label>
                 <br />
                 <input type="text" className="form-control" name="numeromovil" onChange={handleChange} value={usuarioSeleccionado && usuarioSeleccionado.numeromovil}/>
                 <br />
-                <label>Tipo usuario: </label>
+                <label>Tipo usuario:* </label>
                 <br />
                 <select className="form-select" aria-label="Default select example" name="idtipousuario" onChange={handleChange} value={usuarioSeleccionado && usuarioSeleccionado.idtipousuario}>
                     <option value="1">Administrador</option>
