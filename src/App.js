@@ -13,6 +13,7 @@ import {
 import ListaUsuarios from './components/ListaUsuarios';
 import ListaBlogs from './components/ListaBlogs';
 import Home from './components/Home';
+import ListaCategorias from './components/ListaCategorias';
 
 function App() {
   const baseUrl="http://localhost/blog_konecta/";
@@ -32,6 +33,9 @@ function App() {
           <NavLink to="/blogs" className="btn btn-dark">
             Blogs
           </NavLink>
+          <NavLink to="/categorias" className="btn btn-dark">
+            Categorias
+          </NavLink>
 
         </div>
         <hr />
@@ -41,6 +45,9 @@ function App() {
           </Route>
           <Route path="/blogs">
             <ListaBlogs />
+          </Route>
+          <Route path="/categorias">
+            <ListaCategorias />
           </Route>
           <Route path="/">
             <Home />
