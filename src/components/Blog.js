@@ -53,12 +53,13 @@ const Blog = () => {
             <div className="row">
                 <div className="col-sm-8">
                     <div className="card">
-                    <div className="card-body">
-                        <h2 className="card-title">{blog.titulo}</h2>
-                        <h5 className="card-title">{categoriastexto}</h5>
-                        <p className="card-text">{blog.textocorto}</p>
-                        <p className="card-text">{blog.textolargo}</p>
-                    </div>
+                        <img className="card-img-top" ></img>
+                        <div className="card-body">
+                            <h2 className="card-title">{blog.titulo}</h2>
+                            <h5 className="card-title">{categoriastexto}</h5>
+                            <p className="card-text">{blog.textocorto}</p>
+                            <p className="card-text">{blog.textolargo}</p>
+                        </div>
                     </div>
                 </div>
                 <div className="col-sm-4">

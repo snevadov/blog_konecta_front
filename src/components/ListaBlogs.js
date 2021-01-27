@@ -178,35 +178,30 @@ const ListaBlogs = () => {
     return (
         <div className="Container">
             <h2>Listado de Blogs</h2>
-            <table className="table">
-                <thead>
-                    <tr>
-                    <th scope="col">Título</th>
-                    <th scope="col">Texto Corto</th>
-                    <th scope="col">Categorias</th>
-                    <th scope="col">Link</th>
-                    <th scope="col">Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {data.map(blog=>(
-                        <tr key={blog.id}>
-                            <td>{blog.titulo}</td>
-                            <td>{blog.textocorto}</td>
-                            <td>{blog.categorias}</td>
-                            <td>
-                                <Link to={`/blogs/${blog.id}/${blog.slug}`}>
-                                    {blog.slug}
-                                </Link>
-                            </td>
-                            <td>
+            {data.map(blog=>(
+                <div key={blog.id} className="card mb-3">
+                    <div className="row g-0">
+                        <div className="col-md-2 bg-dark">
+                            <img src="..." alt="..." className="img-thumbnai"></img>
+                        </div>
+                        <div className="col-md-8">
+                            <div className="card-body">
+                                <h5 className="card-title">{blog.titulo}</h5>
+                                <p className="card-text">{blog.textocorto}</p>
+                                <p className="card-text"><small className="text-muted">{blog.categorias}</small></p>
+                            </div>
+                            <div className="card-body">
+                                <Link className="btn btn-secondary" to={`/blogs/${blog.id}/${blog.slug}`}>
+                                    Leer más...
+                                </Link>{"  "}
                                 <button className="btn btn-primary" onClick={()=>seleccionarBlog(blog, "Editar")}>Editar</button> {"  "}
                                 <button className="btn btn-danger" onClick={()=>seleccionarBlog(blog, "Eliminar")}>Eliminar</button>
-                            </td>
-                        </tr>    
-                    ))}
-                </tbody>
-            </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            ))}
+
 
             <button className="btn btn-success" onClick={()=>abrirCerrarModalInsertar()}>Insertar</button>
 
