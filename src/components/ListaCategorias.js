@@ -69,9 +69,11 @@ const ListaCategorias = () => {
         f.append("action", "crearCategoria");
         await axios.post(baseUrl, f)
         .then(response=>{
-            console.log(response.data);
-            setData(response.data.categorias);
-            abrirCerrarModalInsertar();
+            if(response.data.exito){
+                setData(response.data.categorias);
+                abrirCerrarModalInsertar();
+            }
+            alert(response.data.mensaje);
         }).catch(error=>{
             console.log(error);
         })
@@ -86,15 +88,18 @@ const ListaCategorias = () => {
         f.append("action", "editarCategoria");
         await axios.post(baseUrl, f)
         .then(response=>{
-          var dataNueva= response.data.categorias;
-          dataNueva.map(categoria=>{
-            if(categoria.id===categoriaSeleccionada.id){
-              categoria.nombre=categoriaSeleccionada.nombre;
-              categoria.descripcion=categoriaSeleccionada.descripcion;
+            if(response.data.exito){
+                var dataNueva= response.data.categorias;
+                dataNueva.map(categoria=>{
+                    if(categoria.id===categoriaSeleccionada.id){
+                    categoria.nombre=categoriaSeleccionada.nombre;
+                    categoria.descripcion=categoriaSeleccionada.descripcion;
+                    }
+                });
+                setData(dataNueva);
+                abrirCerrarModalEditar();
             }
-          });
-          setData(dataNueva);
-          abrirCerrarModalEditar();
+            alert(response.data.mensaje);
         }).catch(error=>{
           console.log(error);
         })
@@ -107,8 +112,11 @@ const ListaCategorias = () => {
         f.append("action", "eliminarCategoria");
         await axios.post(baseUrl, f, {params: {id: categoriaSeleccionada.id}})
         .then(response=>{
-          setData(response.data.categorias.filter(categoria=>categoria.id!==categoriaSeleccionada.id));
-          abrirCerrarModalEliminar();
+            if(response.data.exito){
+                setData(response.data.categorias.filter(categoria=>categoria.id!==categoriaSeleccionada.id));
+                abrirCerrarModalEliminar();
+            }
+            alert(response.data.mensaje);
         }).catch(error=>{
           console.log(error);
         })
@@ -145,11 +153,11 @@ const ListaCategorias = () => {
             <ModalHeader>Insertar Categoría</ModalHeader>
             <ModalBody>
                 <div className="form-group">
-                <label>Nombre: </label>
+                <label>Nombre:* </label>
                 <br />
                 <input type="text" className="form-control" name="nombre" onChange={handleChange}/>
                 <br />
-                <label>Descripción: </label>
+                <label>Descripción:* </label>
                 <br />
                 <input type="text" className="form-control" name="descripcion" onChange={handleChange}/>
                 <br />
@@ -167,11 +175,11 @@ const ListaCategorias = () => {
             <ModalHeader>Editar Categoría</ModalHeader>
             <ModalBody>
             <div className="form-group">
-                <label>Nombre: </label>
+                <label>Nombre:* </label>
                 <br />
                 <input type="text" className="form-control" name="nombre" onChange={handleChange} value={categoriaSeleccionada && categoriaSeleccionada.nombre}/>
                 <br />
-                <label>Descripción: </label>
+                <label>Descripción:* </label>
                 <br />
                 <input type="text" className="form-control" name="descripcion" onChange={handleChange} value={categoriaSeleccionada && categoriaSeleccionada.descripcion}/>
                 <br />
