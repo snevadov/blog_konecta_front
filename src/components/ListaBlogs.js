@@ -257,19 +257,19 @@ const ListaBlogs = () => {
             <ModalHeader>Editar Blog</ModalHeader>
             <ModalBody>
             <div className="form-group">
-                <label>Título: </label>
+                <label>Título:* </label>
                 <br />
                 <input type="text" className="form-control" name="titulo" onChange={handleChange} value={blogSeleccionado && blogSeleccionado.titulo}/>
                 <br />
-                <label>Texto corto: </label>
+                <label>Texto corto:* </label>
                 <br />
                 <input type="text" className="form-control" name="textocorto" onChange={handleChange} value={blogSeleccionado && blogSeleccionado.textocorto}/>
                 <br />
-                <label>Texto largo: </label>
+                <label>Texto largo:* </label>
                 <br />
                 <input type="text" className="form-control" name="textolargo" rows="3" onChange={handleChange} value={blogSeleccionado && blogSeleccionado.textolargo}/>
                 <br />
-                <label>URL: </label>
+                <label>URL Amigable (SLUG):* </label>
                 <br />
                 <input type="text" className="form-control" name="slug" onChange={handleChange} value={blogSeleccionado && blogSeleccionado.slug}/>
                 <br />
@@ -277,7 +277,7 @@ const ListaBlogs = () => {
                 <br />
                 <input type="text" className="form-control" name="rutaimagen" onChange={handleChange} value={blogSeleccionado && blogSeleccionado.rutaimagen}/>
                 <br />
-                <label>Categorías: </label>
+                <label>Categorías:* </label>
                 <br />
                 <select className="form-select" aria-label="Default select example" name="idcategorias" onChange={handleChange} value={blogSeleccionado && blogSeleccionado.idcategorias}>
                     <option> Seleccione una opción</option>
