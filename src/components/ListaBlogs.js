@@ -109,9 +109,12 @@ const ListaBlogs = () => {
         f.append("action", "crearBlog");
         await axios.post(baseUrl, f)
         .then(response=>{
-            console.log(response.data);
-            setData(response.data.blogs);
-            abrirCerrarModalInsertar();
+            if(response.data.exito)
+            {
+                setData(response.data.blogs);
+                abrirCerrarModalInsertar();
+            }
+            alert(response.data.mensaje);
         }).catch(error=>{
             console.log(error);
         })
@@ -132,19 +135,23 @@ const ListaBlogs = () => {
 
         await axios.post(baseUrl, f)
         .then(response=>{
-          var dataNueva= response.data.blogs;
-          dataNueva.map(blog=>{
-            if(blog.id===blogSeleccionado.id){
-              blog.titulo=blogSeleccionado.titulo;
-              blog.slug=blogSeleccionado.slug;
-              blog.textocorto=blogSeleccionado.textocorto;
-              blog.textolargo=blogSeleccionado.textolargo;
-              blog.rutaimagen=blogSeleccionado.rutaimagen;
-              blog.categorias=blogSeleccionado.categorias;
+            if(response.data.exito)
+            {
+                var dataNueva= response.data.blogs;
+                dataNueva.map(blog=>{
+                    if(blog.id===blogSeleccionado.id){
+                    blog.titulo=blogSeleccionado.titulo;
+                    blog.slug=blogSeleccionado.slug;
+                    blog.textocorto=blogSeleccionado.textocorto;
+                    blog.textolargo=blogSeleccionado.textolargo;
+                    blog.rutaimagen=blogSeleccionado.rutaimagen;
+                    blog.categorias=blogSeleccionado.categorias;
+                    }
+                });
+                setData(dataNueva);
+                abrirCerrarModalEditar();
             }
-          });
-          setData(dataNueva);
-          abrirCerrarModalEditar();
+            alert(response.data.mensaje);
         }).catch(error=>{
           console.log(error);
         })
@@ -157,8 +164,12 @@ const ListaBlogs = () => {
         f.append("action", "eliminarBlog");
         await axios.post(baseUrl, f, {params: {id: blogSeleccionado.id}})
         .then(response=>{
-          setData(response.data.blogs.filter(blog=>blog.id!==blogSeleccionado.id));
-          abrirCerrarModalEliminar();
+            if(response.data.exito)
+            {
+                setData(response.data.blogs.filter(blog=>blog.id!==blogSeleccionado.id));
+                abrirCerrarModalEliminar();
+            }
+            alert(response.data.mensaje);
         }).catch(error=>{
           console.log(error);
         })
@@ -203,19 +214,19 @@ const ListaBlogs = () => {
             <ModalHeader>Insertar Blog</ModalHeader>
             <ModalBody>
                 <div className="form-group">
-                <label>Título: </label>
+                <label>Título:* </label>
                 <br />
                 <input type="text" className="form-control" name="titulo" onChange={handleChange}/>
                 <br />
-                <label>Texto corto: </label>
+                <label>Texto corto:* </label>
                 <br />
                 <input type="text" className="form-control" name="textocorto" onChange={handleChange}/>
                 <br />
-                <label>Texto largo: </label>
+                <label>Texto largo:* </label>
                 <br />
                 <input type="text" className="form-control" name="textolargo" rows="3" onChange={handleChange}/>
                 <br />
-                <label>URL: </label>
+                <label>URL Amigable (SLUG):* </label>
                 <br />
                 <input type="text" className="form-control" name="slug" onChange={handleChange}/>
                 <br />
@@ -223,10 +234,10 @@ const ListaBlogs = () => {
                 <br />
                 <input type="text" className="form-control" name="rutaimagen" onChange={handleChange}/>
                 <br />
-                <label>Categorías: </label>
+                <label>Categorías:* </label>
                 <br />
                 <select className="form-select" aria-label="Default select example" name="idcategorias" onChange={handleChange}>
-                    <option> Seleccione una opción</option>
+                    <option key="0" value="0" selected> Seleccione una opción</option>
                     {categorias.map(categoria=>(
                             <option key={categoria.id} id={categoria.id} value={categoria.id}>{categoria.nombre}</option>
                         ))}

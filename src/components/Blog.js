@@ -25,20 +25,24 @@ const Blog = () => {
         f.append("action", "verBlog");
         await axios.post(baseUrl, f)
         .then(response=>{
-          setBlog(response.data.blog);
-          setBlogs(response.data.blogs);
-          setCategorias(response.data.categorias);
-          setBlogs(response.data.blogs.filter(blog=>blog.id!==response.data.blog.id));
-          var categoriasTexto = '';
-          response.data.categorias.forEach(categoria => {
-              response.data.blog.idcategorias.forEach(idcategoria => {
-                  if(idcategoria == categoria.id){
-                    categoriasTexto += categoria.nombre + ' ';
-                  }
-              })
-              
-          });
-          setCategoriasTexto(categoriasTexto);
+            if(response.data.exito)
+            {
+                setBlog(response.data.blog);
+                setCategorias(response.data.categorias);
+                setBlogs(response.data.blogs.filter(blog=>blog.id!==response.data.blog.id));
+                var categoriasTexto = '';
+                response.data.categorias.forEach(categoria => {
+                    response.data.blog.idcategorias.forEach(idcategoria => {
+                        if(idcategoria == categoria.id){
+                            categoriasTexto += categoria.nombre + ' ';
+                        }
+                    })
+                    
+                });
+                setCategoriasTexto(categoriasTexto);
+            } else {
+                alert(response.data.mensaje);
+            }
         }).catch(error=>{
           console.log(error);
         })
