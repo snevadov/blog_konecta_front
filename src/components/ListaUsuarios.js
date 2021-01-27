@@ -70,9 +70,9 @@ const ListaUsuarios = () => {
 
     //Listado de usuarios via API
     const listarUsuarios=async()=>{
-        await axios.get(baseUrl, {
-            "action":"listarUsuarios"
-        })
+        var f = new FormData();
+        f.append("action", "listarUsuarios");
+        await axios.post(baseUrl, f)
         .then(response=>{
           setData(response.data.usuarios);
         }).catch(error=>{
@@ -94,7 +94,7 @@ const ListaUsuarios = () => {
         await axios.post(baseUrl, f)
         .then(response=>{
             console.log(response.data);
-            setData(data.concat(usuarioSeleccionado));
+            setData(response.data.usuarios);
             abrirCerrarModalInsertar();
         }).catch(error=>{
             console.log(error);
@@ -111,7 +111,7 @@ const ListaUsuarios = () => {
         f.append("contrasena", usuarioSeleccionado.contrasena);
         f.append("numeromovil", usuarioSeleccionado.numeromovil);
         f.append("idtipousuario", usuarioSeleccionado.idtipousuario);
-        f.append("tipousuario", usuarioSeleccionado.idtipousuario.value);
+        f.append("tipousuario", usuarioSeleccionado.tipousuario);
         f.append("action", "editarUsuario");
         await axios.post(baseUrl, f)
         .then(response=>{

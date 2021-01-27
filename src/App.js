@@ -11,8 +11,7 @@ import {
   NavLink
 } from "react-router-dom";
 import ListaUsuarios from './components/ListaUsuarios';
-import CrearUsuario from './components/CrearUsuario';
-import EditarUsuario from './components/EditarUsuario';
+import ListaBlogs from './components/ListaBlogs';
 import Home from './components/Home';
 
 function App() {
@@ -28,13 +27,10 @@ function App() {
             Inicio
           </NavLink>
           <NavLink to="/usuarios" className="btn btn-dark">
-            Listado Usuario
+            Usuarios
           </NavLink>
-          <NavLink to="/crearUsuario" className="btn btn-dark">
-            Crear Usuario
-          </NavLink>
-          <NavLink to="/editarUsuario" className="btn btn-dark" activeClassName="active">
-            Editar Usuario
+          <NavLink to="/blogs" className="btn btn-dark">
+            Blogs
           </NavLink>
 
         </div>
@@ -43,17 +39,8 @@ function App() {
           <Route path="/usuarios">
             <ListaUsuarios />
           </Route>
-          <Route path="/crearUsuario">
-            <CrearUsuario />
-          </Route>
-          <Route path="/editarUsuario">
-            <EditarUsuario />
-          </Route>
-          <Route path="/crearUsuarios">
-            <CrearUsuario />
-          </Route>
-          <Route path="/crearUsuarios">
-            <CrearUsuario />
+          <Route path="/blogs">
+            <ListaBlogs />
           </Route>
           <Route path="/">
             <Home />
