@@ -182,7 +182,7 @@ const ListaBlogs = () => {
                 <div key={blog.id} className="card mb-3">
                     <div className="row g-0">
                         <div className="col-md-2 bg-dark">
-                            <img src="..." alt="..." className="img-thumbnai"></img>
+                            <img className="img-thumbnai"></img>
                         </div>
                         <div className="col-md-8">
                             <div className="card-body">
