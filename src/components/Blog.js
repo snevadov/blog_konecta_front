@@ -10,6 +10,7 @@ const Blog = () => {
     const [blog, setBlog] = React.useState([]);
     const [blogs, setBlogs] = React.useState([]);
     const [categorias, setCategorias] = React.useState([]);
+    const [categoriastexto, setCategoriasTexto] = React.useState([]);
     const baseUrl="http://localhost/blog_konecta/";
 
     useEffect(() => {
@@ -27,6 +28,17 @@ const Blog = () => {
           setBlog(response.data.blog);
           setBlogs(response.data.blogs);
           setCategorias(response.data.categorias);
+          setBlogs(response.data.blogs.filter(blog=>blog.id!==response.data.blog.id));
+          var categoriasTexto = '';
+          response.data.categorias.forEach(categoria => {
+              response.data.blog.idcategorias.forEach(idcategoria => {
+                  if(idcategoria == categoria.id){
+                    categoriasTexto += categoria.nombre + ' ';
+                  }
+              })
+              
+          });
+          setCategoriasTexto(categoriasTexto);
         }).catch(error=>{
           console.log(error);
         })
@@ -34,25 +46,25 @@ const Blog = () => {
 
     return (
         <div className="Container">
-            <div class="row">
-                <div class="col-sm-8">
-                    <div class="card">
-                    <div class="card-body">
-                        <h2 class="card-title">{blog.titulo}</h2>
-                        <h5 class="card-title">{blog.titulo}</h5>
-                        <p class="card-text">{blog.textocorto}</p>
-                        <p class="card-text">{blog.textolargo}</p>
+            <div className="row">
+                <div className="col-sm-8">
+                    <div className="card">
+                    <div className="card-body">
+                        <h2 className="card-title">{blog.titulo}</h2>
+                        <h5 className="card-title">{categoriastexto}</h5>
+                        <p className="card-text">{blog.textocorto}</p>
+                        <p className="card-text">{blog.textolargo}</p>
                     </div>
                     </div>
                 </div>
-                <div class="col-sm-4">
-                    <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Otros blogs</h5>
-                        <ul class="list-group">                        
+                <div className="col-sm-4">
+                    <div className="card">
+                    <div className="card-body">
+                        <h5 className="card-title">Otros blogs</h5>
+                        <ul className="list-group">                        
                             {blogs.map(blog=>(
-                                <li class="list-group-item">
-                                    <a href={`/blogs/${blog.id}/${blog.slug}`} class="card-link">{blog.slug}</a>
+                                <li key={blog.id} className="list-group-item">
+                                    <a href={`/blogs/${blog.id}/${blog.slug}`} className="card-link">{blog.slug}</a>
                                 </li> 
                             ))}
                         </ul>
